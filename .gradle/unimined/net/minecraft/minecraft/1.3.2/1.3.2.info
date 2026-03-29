@@ -1,0 +1,9 @@
+release-date:1345124077000
+compile-date:1344946396000
+url:https://launcher.mojang.com/v1/objects/c2efd57c7001ddf505ca534e54abf3d006e48309/client.jar
+launch-method:indev
+launch-method-link:
+proxy-args:-Dhttp.proxyHost=betacraft.uk -Dhttp.proxyPort=11707
+other-name:1.3.2-pre
+file-ver:1
+protocolVersion:release_39
