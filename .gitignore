@@ -3,5 +3,6 @@
 
 # Gradle build files and caches
 
+.gradle/
 
 build/
