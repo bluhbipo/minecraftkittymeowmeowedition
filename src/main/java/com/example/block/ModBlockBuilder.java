@@ -15,9 +15,9 @@ public class ModBlockBuilder extends ModBlockList
 	String name = "you forgot to name it";
 	Material material = Material.cloth;
 	ISimpleBlockRenderingHandler renderer;
-	public ModBlockBuilder setTextureIndex(int i)
+	public ModBlockBuilder setTextureCoords(int x, int y)
 	{
-		textureIndex=i;
+		textureIndex=16*y + x;
 		return this;
 	}
 	public ModBlockBuilder setHardness(int h)

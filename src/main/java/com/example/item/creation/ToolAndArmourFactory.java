@@ -30,6 +30,8 @@ public class ToolAndArmourFactory
 				res[index]
 					.setEnchantability(m.enchantability)
 					.setDurabilityFactor(m.durabilityFactor);
+			}else{
+				res[index].cookedFrom(m.getOre());
 			}
 			index++;
 		}

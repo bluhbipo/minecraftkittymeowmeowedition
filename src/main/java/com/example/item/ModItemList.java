@@ -1,11 +1,13 @@
 package com.example.item;
 
+import com.example.ItemOrBlock;
 import com.example.item.creation.Material;
 import com.example.item.creation.ModItemBuilder;
 import com.example.item.creation.ToolAndArmourFactory;
 import com.example.item.handler.ModItem;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ModItemList
@@ -36,11 +38,20 @@ public class ModItemList
 			.isEdible()
 			.setHungerPoints(8)
 			.setSaturation(0.8f)
-			.cookedFrom(mutton)
+			.cookedFrom((ItemOrBlock) mutton)
 			.buildAndRegister();
 		ModItemBuilder[] netheriteGear = ToolAndArmourFactory.getSet(Material.NETHERITE);
 		for (ModItemBuilder mm : netheriteGear)
 		{
+			mm.buildAndRegister();
+		}
+		ModItemBuilder[] enderiteGear = ToolAndArmourFactory.getSet(Material.ENDERITE);
+		for (ModItemBuilder mm : enderiteGear)
+		{
+			if(mm.name.equals("Enderite Ingot"))
+			{
+				mm.name = "Enderite";
+			}
 			mm.buildAndRegister();
 		}
 	}

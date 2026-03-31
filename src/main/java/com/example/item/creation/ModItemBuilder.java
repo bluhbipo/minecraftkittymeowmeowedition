@@ -1,5 +1,6 @@
 package com.example.item.creation;
 
+import com.example.ItemOrBlock;
 import com.example.OwnerCode;
 import com.example.item.handler.ModItem;
 import com.example.item.handler.ModItemArmour;
@@ -18,7 +19,7 @@ public class ModItemBuilder extends ModItemList
 	public boolean meatness = false;
 	public float saturationModifier; //usually 0.3 or 0.8
 	public int hungerPoints;
-	public ModifiedItem cookedFrom;
+	public ItemOrBlock cookedFrom;
 	public Integer armourType;
 	public AutogenMaterialItem toolType;
 
@@ -58,7 +59,7 @@ public class ModItemBuilder extends ModItemList
 		saturationModifier = s;
 		return this;
 	}
-	public ModItemBuilder cookedFrom(ModifiedItem c)
+	public ModItemBuilder cookedFrom(ItemOrBlock c)
 	{
 		cookedFrom = c;
 		return this;

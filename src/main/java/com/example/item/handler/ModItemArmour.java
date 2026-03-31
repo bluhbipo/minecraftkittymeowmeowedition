@@ -1,5 +1,6 @@
 package com.example.item.handler;
 
+import com.example.ItemOrBlock;
 import com.example.item.ModItemDefaults;
 import com.example.item.ModifiedItem;
 import com.example.item.creation.ModItemBuilder;
@@ -7,7 +8,7 @@ import net.minecraft.src.EnumArmorMaterial;
 import net.minecraft.src.ItemArmor;
 import net.minecraft.src.ItemStack;
 
-public class ModItemArmour extends ItemArmor implements ModifiedItem
+public class ModItemArmour extends ItemArmor implements ModifiedItem, ItemOrBlock
 {
 	String name = "";
 	public int enchantability;

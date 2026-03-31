@@ -1,7 +1,8 @@
 package com.example.item.creation;
 
+import com.example.ItemOrBlock;
+import com.example.block.ModBlockList;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.src.EnumArmorMaterial;
 
 public enum Material
 {
@@ -18,6 +19,14 @@ public enum Material
 		enchantability = e;
 		durabilityFactor = d;
 		armourRenderIndex = RenderingRegistry.addNewArmourRendererPrefix(this.toString().toLowerCase());
+	}
+	public ItemOrBlock getOre()
+	{
+		switch (this)
+		{
+			case NETHERITE: return (ItemOrBlock) ModBlockList.netheriteOre;
+			default: return null;
+		}
 	}
 
 }

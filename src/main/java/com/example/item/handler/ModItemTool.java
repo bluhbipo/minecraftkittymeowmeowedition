@@ -1,5 +1,6 @@
 package com.example.item.handler;
 
+import com.example.ItemOrBlock;
 import com.example.item.ModItemDefaults;
 import com.example.item.ModifiedItem;
 import com.example.item.creation.AutogenMaterialItem;
@@ -10,7 +11,7 @@ import net.minecraft.src.*;
 
 import java.util.List;
 
-public class ModItemTool extends ItemTool implements ModifiedItem
+public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 {
 	String name = "";
 	AutogenMaterialItem toolType;
@@ -27,14 +28,6 @@ public class ModItemTool extends ItemTool implements ModifiedItem
 
 
 
-	}
-
-
-	@Override
-	public void addInformation(ItemStack par1ItemStack, List par2List)
-	{
-		super.addInformation(par1ItemStack, par2List);
-		par2List.add("Line 2");
 	}
 
 	@Override

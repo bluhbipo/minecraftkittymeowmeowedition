@@ -17,4 +17,10 @@ public class ObsidianStepSound extends StepSound
 	public float getPitch() {
 		return super.getPitch() * 0.5F;
 	}
+
+	@Override
+	public float getVolume()
+	{
+		return super.getVolume() * 0.5f;
+	}
 }

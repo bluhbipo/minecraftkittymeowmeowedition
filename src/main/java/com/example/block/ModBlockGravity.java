@@ -1,10 +1,11 @@
 package com.example.block;
 
 
+import com.example.ItemOrBlock;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.BlockSand;
 
-public class ModBlockGravity extends BlockSand implements ModifiedBlock
+public class ModBlockGravity extends BlockSand implements ModifiedBlock, ItemOrBlock
 {
 	public ISimpleBlockRenderingHandler renderer;
 	public ModBlockGravity(ModBlockBuilder struct)

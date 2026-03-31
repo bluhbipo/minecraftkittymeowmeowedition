@@ -1,6 +1,7 @@
 package com.example.item;
 
 import com.example.item.creation.ModItemBuilder;
+import net.minecraft.src.Block;
 import net.minecraft.src.FurnaceRecipes;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -19,11 +20,21 @@ public class ModItemDefaults
 
 		if(ii.cookedFrom != null)
 		{
-			FurnaceRecipes.smelting().addSmelting(
-				((Item)ii.cookedFrom).shiftedIndex,
-				new ItemStack(i),
-				0.35F
-			);
+			if(ii.cookedFrom instanceof ModifiedItem)
+			{
+				FurnaceRecipes.smelting().addSmelting(
+					((Item)ii.cookedFrom).shiftedIndex,
+					new ItemStack(i),
+					0.35F
+				);
+			}else{
+				FurnaceRecipes.smelting().addSmelting(
+					((Block)ii.cookedFrom).blockID,
+					new ItemStack(i),
+					0.35F
+				);
+			}
+
 		}
 	}
 }

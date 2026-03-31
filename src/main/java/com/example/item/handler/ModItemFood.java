@@ -1,12 +1,13 @@
 package com.example.item.handler;
 
+import com.example.ItemOrBlock;
 import com.example.item.ModItemDefaults;
 import com.example.item.ModifiedItem;
 import com.example.item.creation.ModItemBuilder;
 import net.minecraft.src.ItemFood;
 import net.minecraft.src.ItemStack;
 
-public class ModItemFood extends ItemFood implements ModifiedItem
+public class ModItemFood extends ItemFood implements ModifiedItem, ItemOrBlock
 {
 	String name = "";
 	public ModItemFood(ModItemBuilder struct)

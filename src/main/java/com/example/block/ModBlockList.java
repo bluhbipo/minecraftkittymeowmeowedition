@@ -14,20 +14,26 @@ public class ModBlockList
 		if(allBlocks.isEmpty()) generate();
 		return allBlocks;
 	}
+	public static ModifiedBlock netheriteOre;
 	private static void generate()
 	{
 		new ModBlockBuilder()
 			.setName("Ash Block")
-			.setTextureIndex(0)
+			.setTextureCoords(0, 0)
 			.setStepSound(Block.soundSandFootstep)
 			.hasGravity()
 			.buildAndRegister();
 		new ModBlockBuilder()
 			.setName("Anvil")
-			.setTextureIndex(7)
+			.setTextureCoords(7, 0)
 			.setStepSound(Block.soundMetalFootstep)
 			.hasGravity()
 			.setRenderer(new AnvilModel())
+			.buildAndRegister();
+		netheriteOre = new ModBlockBuilder()
+			.setName("Netherite Ore")
+			.setTextureCoords(0, 15)
+			.setStepSound(Block.soundStoneFootstep)
 			.buildAndRegister();
 	}
 }
