@@ -1,5 +1,8 @@
-package com.example.item;
+package com.example.item.handler;
 
+import com.example.item.ModItemDefaults;
+import com.example.item.ModifiedItem;
+import com.example.item.creation.ModItemBuilder;
 import net.minecraft.src.ItemFood;
 import net.minecraft.src.ItemStack;
 

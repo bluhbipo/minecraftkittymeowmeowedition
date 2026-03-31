@@ -1,9 +1,9 @@
-package com.example.item;
+package com.example.item.handler;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
+import com.example.item.ModItemDefaults;
+import com.example.item.ModifiedItem;
+import com.example.item.creation.ModItemBuilder;
+import net.minecraft.src.*;
 import com.example.OwnerCode;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class ModItem extends Item implements ModifiedItem
 		rightClickLogic = struct.rightClick;
 		name=struct.name;
 		ModItemDefaults.init(this, struct);
-
+		this.setCreativeTab(CreativeTabs.tabMisc);
 		getItemByID.put(256+ModItemDefaults.id, this);
 		ModItemDefaults.id++;
 	}

@@ -1,5 +1,6 @@
 package com.example.item;
 
+import com.example.item.creation.ModItemBuilder;
 import net.minecraft.src.FurnaceRecipes;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;

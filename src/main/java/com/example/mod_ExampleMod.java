@@ -1,6 +1,11 @@
 package com.example;
 
+import com.example.override.ItemOverride;
+import com.example.player.KeyBinds;
+import com.example.tick.ClientTickHandler;
+import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.registry.TickRegistry;
 import net.minecraft.src.BaseMod;
 import net.minecraft.src.Block;
 import net.minecraft.src.ModLoader;
@@ -34,6 +39,8 @@ public class mod_ExampleMod extends BaseMod {
         doEntities();
         doBiomes();
         doListeners();
+        KeyBinds.inject();
+        TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
 
         proxy.registerRenderers();
 
@@ -66,6 +73,7 @@ public class mod_ExampleMod extends BaseMod {
     public boolean doItems()
     {
         ModItemList.generate();
+        ItemOverride.inject();
         return true;
     }
 

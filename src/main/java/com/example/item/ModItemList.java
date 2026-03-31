@@ -1,5 +1,10 @@
 package com.example.item;
 
+import com.example.item.creation.Material;
+import com.example.item.creation.ModItemBuilder;
+import com.example.item.creation.ToolAndArmourFactory;
+import com.example.item.handler.ModItem;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +21,8 @@ public class ModItemList
 	public static ModifiedItem cookedMutton;
 	public static void generate()
 	{
+
+
 		mutton = new ModItemBuilder()
 			.setTextureCoords(0, 0)
 			.setName("Raw Mutton")
@@ -31,6 +38,10 @@ public class ModItemList
 			.setSaturation(0.8f)
 			.cookedFrom(mutton)
 			.buildAndRegister();
-
+		ModItemBuilder[] netheriteGear = ToolAndArmourFactory.getSet(Material.NETHERITE);
+		for (ModItemBuilder mm : netheriteGear)
+		{
+			mm.buildAndRegister();
+		}
 	}
 }

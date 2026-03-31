@@ -2,10 +2,7 @@ package com.example.override.blockoverrides;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockGlass;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.Material;
+import net.minecraft.src.*;
 import com.example.block.stepsound.ObsidianStepSound;
 
 import java.util.Random;
@@ -19,6 +16,8 @@ public class CustomObsidian extends BlockGlass
 		this.stepSound = new ObsidianStepSound();
 		this.blockHardness = 10f;
 		this.blockIndexInTexture = 0;
+
+
 	}
 
 	@SideOnly(Side.CLIENT)

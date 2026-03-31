@@ -1,5 +1,6 @@
 package com.example.item;
 
+import com.example.item.handler.ModItem;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
