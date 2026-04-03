@@ -29,7 +29,6 @@ public class Map2<K1,K2,V> {
 	{
 		if(!internal.containsKey(k1))
 		{
-			System.out.println("attempting to access nonexistant key:" + k1);
 			return null;
 		}else{
 			return internal.get(k1).get(k2);

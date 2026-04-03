@@ -108,6 +108,11 @@ public class mod_ExampleMod extends BaseMod {
                 "mmm",
                 'm', ingot
             );
+            GameRegistry.addRecipe(
+                new ItemStack((Item)ingot,9),
+                "m",
+                'm', m.getBlock()
+            );
             System.out.println("registered recipe: "+m.getBlock().getBlockName());
         }
         System.out.println("finished recipes:");

@@ -15,7 +15,7 @@ public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
 
 		super(ModBlockDefaults.id, struct.material);
 		this.props = struct;
-		System.out.println("here");
+		this.setCreativeTab(CreativeTabs.tabBlock);
 		ModBlockDefaults.id++;
 		ModBlockDefaults.init(this, struct);
 	}
