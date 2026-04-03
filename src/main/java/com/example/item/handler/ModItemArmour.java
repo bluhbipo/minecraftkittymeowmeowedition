@@ -15,7 +15,7 @@ public class ModItemArmour extends ItemArmor implements ModifiedItem, ItemOrBloc
 	private static final int[] maxDamageArray = new int[]{11, 16, 15, 13};
 	public ModItemArmour(ModItemBuilder struct)
 	{
-		super(ModItemDefaults.id, EnumArmorMaterial.DIAMOND, struct.armourType, struct.armourType);
+		super(ModItemDefaults.id, EnumArmorMaterial.DIAMOND, struct.autogenMaterial.armourRenderIndex, struct.armourType);
 		props = struct;
 		this.setMaxDamage(maxDamageArray[struct.armourType]*struct.autogenMaterial.durabilityFactor);
 		ModItemDefaults.init(this, struct);
