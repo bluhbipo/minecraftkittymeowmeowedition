@@ -44,7 +44,7 @@ public class mod_ExampleMod extends BaseMod {
         doListeners();
         KeyBinds.inject();
         TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
-
+        MinecraftForge.EVENT_BUS.register(new Listeners());
         proxy.registerRenderers();
 
     }
@@ -110,8 +110,8 @@ public class mod_ExampleMod extends BaseMod {
             );
             GameRegistry.addRecipe(
                 new ItemStack((Item)ingot,9),
-                "m",
-                'm', m.getBlock()
+                "b",
+                'b', m.getBlock()
             );
             System.out.println("registered recipe: "+m.getBlock().getBlockName());
         }

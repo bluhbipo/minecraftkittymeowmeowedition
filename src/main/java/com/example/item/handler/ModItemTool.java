@@ -18,7 +18,6 @@ public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 		ModItemDefaults.init(this, struct);
 		props = struct;
 
-
 		ModItem.getItemByID.put(256+ModItemDefaults.id, this);
 		ModItemDefaults.id++;
 
@@ -70,6 +69,23 @@ public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 		}
 
 		return 1.0F;
+	}
+
+	public EnumAction getItemUseAction(ItemStack itemStack) {
+		if(props.autogenItemType == ItemTypeAG.SWORD)
+		{
+			return EnumAction.block;
+		}
+		return super.getItemUseAction(itemStack);
+	}
+
+	public int getMaxItemUseDuration(ItemStack itemStack) {
+		return 72000;
+	}
+
+	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+		player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+		return itemStack;
 	}
 
 
