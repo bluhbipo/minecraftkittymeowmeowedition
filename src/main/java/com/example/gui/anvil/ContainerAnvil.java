@@ -5,19 +5,19 @@ import net.minecraft.src.*;
 public class ContainerAnvil extends Container
 {
 
-	private final Slot input1;
-	private final Slot input2;
-	private final Slot output;
+	public final Slot input1;
+	public final Slot input2;
+	public final Slot output;
 
 	ContainerBrewingStand b;
 
 	public ContainerAnvil(InventoryPlayer inventoryPlayer, IInventory inventoryRules) {
 
-		int slotHeight = 34;
-		int leftSlotX = 35;
+		int slotHeight = 33;
+		int leftSlotX = 34;
 		input1 = this.addSlotToContainer(new SlotAnvilInput(inventoryPlayer, inventoryRules, 0, leftSlotX, slotHeight));
-		input2 = this.addSlotToContainer(new SlotAnvilInput(inventoryPlayer, inventoryRules, 1, leftSlotX+36, slotHeight));
-		output = this.addSlotToContainer(new SlotAnvilOutput(inventoryPlayer, inventoryRules, 2, leftSlotX+100, slotHeight));
+		input2 = this.addSlotToContainer(new SlotAnvilInput(inventoryPlayer, inventoryRules, 1, leftSlotX+37, slotHeight));
+		output = this.addSlotToContainer(new SlotAnvilOutput(inventoryPlayer, inventoryRules, 2, leftSlotX+91, slotHeight));
 
 
 		//the players inventory?
@@ -34,42 +34,42 @@ public class ContainerAnvil extends Container
 
 	}
 
-	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
-		return true;
-	}
+	public ItemStack transferStackInSlot(int par1) {
+		Slot slot = (Slot)this.inventorySlots.get(par1);
+		if (slot == null || !slot.getHasStack()) return null;
 
-	public ItemStack transferStackInSlot(int slotIndex) {
-		ItemStack var2 = null;
-		Slot targetSlot = (Slot)this.inventorySlots.get(slotIndex);
-		if (targetSlot != null && targetSlot.getHasStack()) {
-			ItemStack stackInSlot = targetSlot.getStack();
-			var2 = stackInSlot.copy();
-			if ((slotIndex < 0 || slotIndex > 2) && slotIndex != 3) {
-				if (!this.mergeItemStack(stackInSlot, 3, 4, false))
-				{
-					return null;
+		ItemStack stack = slot.getStack();
+		ItemStack result = stack.copy();
+
+		if (par1 == 0 || par1 == 1 || par1 == 2) {
+			if (!mergeItemStack(stack, 3, 39, false)) return null;
+		} else {
+			boolean moved = false;
+			for (int i = 0; i <= 1; i++) {
+				Slot target = (Slot)this.inventorySlots.get(i);
+				if (target.getHasStack() || !target.isItemValid(stack)) continue;
+				if (mergeItemStack(stack, i, i + 1, false)) {
+					moved = true;
+					break;
 				}
-			} else {
-				if (!this.mergeItemStack(stackInSlot, 4, 39, true)) {
-					return null;
-				}
 
-				targetSlot.onSlotChange(stackInSlot, var2);
 			}
-
-			if (stackInSlot.stackSize == 0) {
-				targetSlot.putStack((ItemStack)null);
-			} else {
-				targetSlot.onSlotChanged();
-			}
-
-			if (stackInSlot.stackSize == var2.stackSize) {
-				return null;
-			}
-
-			targetSlot.onPickupFromSlot(stackInSlot);
+			if (!moved && !mergeItemStack(stack, 3, 39, false)) return null;
 		}
 
-		return var2;
+		if (stack.stackSize == 0) {
+			slot.putStack(null);
+		} else {
+			slot.onSlotChanged();
+		}
+
+		if (stack.stackSize == result.stackSize) return null;
+
+		slot.onPickupFromSlot(stack);
+		return result;
+	}
+
+	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
+		return true;
 	}
 }

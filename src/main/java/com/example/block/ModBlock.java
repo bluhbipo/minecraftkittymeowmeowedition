@@ -1,6 +1,7 @@
 package com.example.block;
 
 import com.example.ItemOrBlock;
+import com.example.mod_ExampleMod;
 import com.example.gui.BapsGui;
 import com.example.gui.anvil.ContainerAnvil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -10,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
@@ -74,6 +76,24 @@ public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
 
 		if(props.gui==null) return false;
 		if (world.isRemote) return true;
+
+		try
+		{
+			player.openGui(
+				mod_ExampleMod.instance,
+				props.gui.getConstructor(Container.class).newInstance(new Object[1]).getGuiID(),
+				world,
+				x,
+				y,
+				z
+
+			);
+		} catch (Exception e)
+		{
+			return false;
+		}
+		return true;
+		/*
 		try
 		{
 			Constructor<? extends BapsGui> guiConstructor = props.gui.getConstructor(Container.class);
@@ -105,6 +125,8 @@ public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
 			e.printStackTrace();
 			return false;
 		}
+
+		 */
 	}
 
 	private void tryToFall(World world, int x, int y, int z) {

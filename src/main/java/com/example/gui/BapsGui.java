@@ -12,4 +12,5 @@ public abstract class BapsGui extends GuiContainer
 	}
 	public abstract Class<? extends IInventory> getInventoryClass();
 	public abstract Class<? extends  Container> getContainerClass();
+	public abstract int getGuiID();
 }

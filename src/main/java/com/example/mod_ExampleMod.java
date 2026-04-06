@@ -5,9 +5,13 @@ import com.example.item.creation.ItemTypeAG;
 import com.example.item.creation.MaterialAG;
 import com.example.override.ItemOverride;
 import com.example.player.KeyBinds;
+import com.example.proxy.ServerProxy;
 import com.example.tick.ClientTickHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import net.minecraft.src.*;
@@ -37,11 +41,15 @@ public class mod_ExampleMod extends BaseMod {
         return null;
     }
 
+    public static mod_ExampleMod instance;
+
+
     @Override
     public void load() {
-
+        instance = this;
         LOGGER.info("Hello World");
         System.out.println("[themod] loading!");
+        doNetworking();
 		doBlocks();
         doItems();
         doRecipes();
@@ -52,6 +60,12 @@ public class mod_ExampleMod extends BaseMod {
         TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
         MinecraftForge.EVENT_BUS.register(new Listeners());
         proxy.registerRenderers();
+
+    }
+
+    private void doNetworking()
+    {
+        NetworkRegistry.instance().registerGuiHandler(this, (IGuiHandler) proxy);
 
     }
 
@@ -191,7 +205,7 @@ public class mod_ExampleMod extends BaseMod {
 
     @SidedProxy(
         clientSide = "com.example.proxy.ClientProxy",
-        serverSide = "com.example.proxy.CommonProxy"
+        serverSide = "com.example.proxy.ServerProxy"
     )
     public static CommonProxy proxy;
 
