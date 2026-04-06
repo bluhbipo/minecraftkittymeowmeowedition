@@ -1,5 +1,6 @@
 package com.example.block;
 
+import com.example.gui.BapsGui;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
@@ -53,6 +54,12 @@ public class ModBlockBuilder extends ModBlockList
 	public ModBlockBuilder setRenderer(ISimpleBlockRenderingHandler r)
 	{
 		renderer = r;
+		return this;
+	}
+	public Class<? extends BapsGui> gui;
+	public ModBlockBuilder setGUI(Class<? extends BapsGui> g)
+	{
+		gui=g;
 		return this;
 	}
 	public ModifiedBlock buildAndRegister()

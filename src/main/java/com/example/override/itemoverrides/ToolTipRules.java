@@ -1,17 +1,17 @@
 package com.example.override.itemoverrides;
 
 import com.example.util.ChatColour;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.src.*;
 
 import java.util.List;
 import java.util.Queue;
 
+@SuppressWarnings("unchecked")
 public class ToolTipRules
 {
 	public static void getTooltip(Item item, ItemStack itemStack, List entries)
 	{
+
 		if(itemStack.getMaxDamage()>0)
 		{
 			entries.add(ChatColour.WHITE+"Durability: "+(itemStack.getMaxDamage()-itemStack.getItemDamage())+" / "+itemStack.getMaxDamage());
@@ -26,7 +26,7 @@ public class ToolTipRules
 				entries.add("are saved on death!");
 
 			}
-			entries.add(ChatColour.AQUA + "" + ChatColour.ITALIC + "SOULBOUND");
+			entries.add(SOULBOUND);
 		}
 		//the list contains the item name... maybe useful later
 		if (entries.size() != 1)
@@ -40,7 +40,8 @@ public class ToolTipRules
 			block.blockID == Block.blockDiamond.blockID ||
 			block.blockID == Block.enchantmentTable.blockID)
 		{
-			entries.add(ChatColour.AQUA + "" + ChatColour.ITALIC + "SOULBOUND");
+			entries.add(SOULBOUND);
 		}
 	}
+	public static String SOULBOUND = ChatColour.AQUA + "" + ChatColour.BOLD  + "SOULBOUND";
 }

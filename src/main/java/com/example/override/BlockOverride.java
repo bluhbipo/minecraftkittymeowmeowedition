@@ -32,6 +32,9 @@ public class BlockOverride
 		Block.blockSteel.setTextureFile(Paths.block1);
 		Block.blockSteel.blockIndexInTexture = 6;
 
+		Block.whiteStone.setTextureFile(Paths.block1);
+		Block.whiteStone.blockIndexInTexture = 4;
+
 
 	}
 

@@ -1,11 +1,15 @@
 package com.example.block;
 
 import com.example.ItemOrBlock;
+import com.example.gui.BapsGui;
+import com.example.gui.anvil.ContainerAnvil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
+import java.lang.reflect.Constructor;
 import java.util.Random;
 
 public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
@@ -63,6 +67,44 @@ public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
 			this.tryToFall(par1World, par2, par3, par4);
 		}
 
+	}
+
+	@SideOnly(Side.CLIENT)
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+
+		if(props.gui==null) return false;
+		if (world.isRemote) return true;
+		try
+		{
+			Constructor<? extends BapsGui> guiConstructor = props.gui.getConstructor(Container.class);
+			BapsGui unused = guiConstructor.newInstance(new Object[1]);
+
+			Constructor<? extends Container> containerConstructor = unused
+				.getContainerClass()
+				.getConstructor(
+					InventoryPlayer.class,
+					IInventory.class
+				);
+
+			Class<? extends IInventory> inventoryClass = unused.getInventoryClass();
+
+			Minecraft
+				.getMinecraft()
+				.displayGuiScreen(
+					guiConstructor.newInstance(
+						containerConstructor.newInstance(
+							player.inventory,
+							inventoryClass.newInstance()
+
+						)
+					)
+				);
+			return true;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	private void tryToFall(World world, int x, int y, int z) {

@@ -1,6 +1,7 @@
 package com.example.player;
 
-import net.minecraft.src.EntityPlayer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.*;
 import org.lwjgl.input.Keyboard;
 
 public class PlayerTick

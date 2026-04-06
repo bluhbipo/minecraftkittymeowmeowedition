@@ -21,6 +21,12 @@ import com.example.override.BlockOverride;
 import com.example.override.MobDropOverride;
 import com.example.proxy.CommonProxy;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.jar.JarFile;
+import java.util.jar.JarOutputStream;
 import java.util.logging.Logger;
 
 public class mod_ExampleMod extends BaseMod {
@@ -36,7 +42,7 @@ public class mod_ExampleMod extends BaseMod {
 
         LOGGER.info("Hello World");
         System.out.println("[themod] loading!");
-        doBlocks();
+		doBlocks();
         doItems();
         doRecipes();
         doEntities();

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CustomItem extends Item
 {
-	ItemTool a;
+	ItemStack a;
 	public final int shiftedIndex;
 	private Item containerItem;
 	private String potionEffect;

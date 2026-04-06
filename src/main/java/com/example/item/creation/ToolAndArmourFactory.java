@@ -1,6 +1,6 @@
 package com.example.item.creation;
 
-import com.example.TextUtils;
+import com.example.util.TextUtils;
 
 public class ToolAndArmourFactory
 {

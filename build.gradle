@@ -19,7 +19,15 @@ java {
     }
 
 }
-
+jar {
+    from('src/main/resources') {
+        include 'META-INF/MANIFEST.MF'
+    }
+    // Ensure the manifest is replaced by ours
+    manifest {
+        from('src/main/resources/META-INF/MANIFEST.MF')
+    }
+}
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
