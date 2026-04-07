@@ -1,6 +1,8 @@
 package com.example.item;
 
 import com.example.ItemOrBlock;
+import com.example.gui.anvil.GuiAnvil;
+import com.example.item.creation.ItemTypeAG;
 import com.example.item.creation.MaterialAG;
 import com.example.item.creation.ModItemBuilder;
 import com.example.item.creation.ToolAndArmourFactory;
@@ -20,6 +22,7 @@ public class ModItemList
 	}
 	public static ModifiedItem mutton;
 	public static ModifiedItem cookedMutton;
+	public static ModifiedItem enderite;
 	public static void generate()
 	{
 
@@ -42,7 +45,11 @@ public class ModItemList
 		ModItemBuilder[] netheriteGear = ToolAndArmourFactory.getSet(MaterialAG.NETHERITE);
 		for (ModItemBuilder mm : netheriteGear)
 		{
-			mm.buildAndRegister();
+			ModifiedItem result = mm.buildAndRegister();
+			if(mm.autogenItemType == ItemTypeAG.INGOT)
+			{
+				GuiAnvil.materialItemIDs.add(((ModItem)result).shiftedIndex+256);
+			}
 		}
 		ModItemBuilder[] enderiteGear = ToolAndArmourFactory.getSet(MaterialAG.ENDERITE);
 		for (ModItemBuilder mm : enderiteGear)
@@ -51,7 +58,12 @@ public class ModItemList
 			{
 				mm.name = "Enderite";
 			}
-			mm.buildAndRegister();
+			ModifiedItem result = mm.buildAndRegister();
+			if(mm.autogenItemType == ItemTypeAG.INGOT)
+			{
+				GuiAnvil.materialItemIDs.add(((ModItem)result).shiftedIndex+256);
+				enderite = result;
+			}
 		}
 	}
 }

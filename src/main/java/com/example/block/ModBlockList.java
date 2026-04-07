@@ -1,6 +1,9 @@
 package com.example.block;
 
+import com.example.ItemOrBlock;
+import com.example.gui.GuiRegister;
 import com.example.gui.anvil.GuiAnvil;
+import com.example.item.ModItemList;
 import net.minecraft.src.BiomeEndDecorator;
 import net.minecraft.src.Block;
 import com.example.block.model.AnvilModel;
@@ -35,7 +38,7 @@ public class ModBlockList
 			.setStepSound(Block.soundMetalFootstep)
 			.hasGravity()
 			.setRenderer(new AnvilModel())
-			.setGUI(GuiAnvil.class)
+			.setGUI(GuiRegister.ANVIL)
 			.buildAndRegister();
 		netheriteOre = new ModBlockBuilder()
 			.setName("Netherite Ore")
@@ -56,6 +59,7 @@ public class ModBlockList
 			.setName("Enderite Ore")
 			.setTextureCoords(1, 15)
 			.setStepSound(Block.soundStoneFootstep)
+			.overrideDrop((ItemOrBlock) ModItemList.enderite)
 			.buildAndRegister();
 		new ModBlockBuilder()
 			.setName("Endstone Tile")

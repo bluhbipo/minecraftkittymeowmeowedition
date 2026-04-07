@@ -1,5 +1,6 @@
 package com.example.override.itemoverrides;
 
+import com.example.item.creation.ItemTypeAG;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.src.*;
@@ -55,22 +56,32 @@ public class CustomItem extends Item
 	}
 
 	@Override
-	public boolean canHarvestBlock(Block target)
+	public boolean canHarvestBlock(Block block)
 	{
-		if(!(source instanceof ItemTool)) return false;
-		return source.canHarvestBlock(target);
+		Material mat = block.blockMaterial;
+		if(source instanceof ItemPickaxe)
+		{
+			return mat == Material.rock || mat == Material.iron || mat == Material.glass;
+		}
+		if(source instanceof ItemWood)
+		{
+			return mat == Material.wood || mat == Material.pumpkin;
+		}
+		if(source instanceof ItemSpade)
+		{
+			return mat == Material.sand
+				|| mat == Material.clay
+				|| mat == Material.craftedSnow
+				|| mat == Material.ground
+				|| mat == Material.grass;
+		}
+		return false;
 	}
 
 	public float getStrVsBlock(ItemStack itemStack, Block target) {
 		if(!(source instanceof ItemTool)) return 1.0F;
-		Block[] mineable = null;
-		if(source instanceof ItemPickaxe) mineable = ItemPickaxe.blocksEffectiveAgainst;
-		if(source instanceof ItemSpade) mineable = ItemSpade.blocksEffectiveAgainst;
-		if(source instanceof ItemAxe) mineable = ItemAxe.blocksEffectiveAgainst;
-		if(mineable == null) return 1.0F;
-		for (Block block : mineable)
+		if(canHarvestBlock(target))
 		{
-			if (block != target) continue;
 			float efficiency = 1.0f;
 			if (source.getItemName().contains("Wood"))
 			{

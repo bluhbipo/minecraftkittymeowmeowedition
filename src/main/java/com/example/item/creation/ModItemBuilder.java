@@ -23,6 +23,7 @@ public class ModItemBuilder extends ModItemList
 	public ItemOrBlock cookedFrom;
 	public Integer armourType;
 	public ItemTypeAG autogenItemType;
+	public float mineSpeed;
 
 	public ModItemBuilder setRightClick(OwnerCode<Object> rc)
 	{
@@ -68,6 +69,11 @@ public class ModItemBuilder extends ModItemList
 	public ModItemBuilder setArmourType(int a)
 	{
 		armourType = a;
+		return this;
+	}
+	public ModItemBuilder setMiningSpeed(float s)
+	{
+		mineSpeed = s;
 		return this;
 	}
 	@NotNull

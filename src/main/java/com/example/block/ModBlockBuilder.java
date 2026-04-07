@@ -1,10 +1,16 @@
 package com.example.block;
 
-import com.example.gui.BapsGui;
+import com.example.ArrayAppend;
+import com.example.ItemOrBlock;
+import com.example.gui.GuiRegister;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
+import net.minecraft.src.ItemPickaxe;
 import net.minecraft.src.Material;
 import net.minecraft.src.StepSound;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public class ModBlockBuilder extends ModBlockList
 {
@@ -56,10 +62,16 @@ public class ModBlockBuilder extends ModBlockList
 		renderer = r;
 		return this;
 	}
-	public Class<? extends BapsGui> gui;
-	public ModBlockBuilder setGUI(Class<? extends BapsGui> g)
+	public GuiRegister gui;
+	public ModBlockBuilder setGUI(GuiRegister g)
 	{
 		gui=g;
+		return this;
+	}
+	public ItemOrBlock overriddenDrop;
+	public ModBlockBuilder overrideDrop(ItemOrBlock t)
+	{
+		overriddenDrop = t;
 		return this;
 	}
 	public ModifiedBlock buildAndRegister()
@@ -69,6 +81,35 @@ public class ModBlockBuilder extends ModBlockList
 		block = new ModBlock(this);
 
 		ModBlockList.allBlocks.add(block);
+
+		Material mat = ((Block)block).blockMaterial;
+		Field blockList = null;
+		if(mat == Material.rock || mat == Material.iron || mat == Material.glass){
+			for(Field f : ItemPickaxe.class.getFields())
+			{
+				if(f.getGenericType() == Block[].class)
+				{
+					blockList = f;
+					break;
+				}
+			}
+			if(blockList!=null)
+			{
+				blockList.setAccessible(true);
+				try
+				{
+					Field modifiersField = Field.class.getDeclaredField("modifiers");
+					modifiersField.setAccessible(true);
+					modifiersField.setInt(blockList, blockList.getModifiers() & ~Modifier.FINAL);
+					blockList.set(null, new ArrayAppend<Block>().append(ItemPickaxe.blocksEffectiveAgainst, (Block)block));
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+
+			}
+		}
+
 		return block;
 	}
 }

@@ -50,8 +50,8 @@ public class mod_ExampleMod extends BaseMod {
         LOGGER.info("Hello World");
         System.out.println("[themod] loading!");
         doNetworking();
-		doBlocks();
         doItems();
+		doBlocks();
         doRecipes();
         doEntities();
 		doBiomes();

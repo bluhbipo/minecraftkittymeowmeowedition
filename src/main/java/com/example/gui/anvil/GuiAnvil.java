@@ -1,35 +1,21 @@
 package com.example.gui.anvil;
 
-import com.example.gui.BapsGui;
 import com.example.gui.GuiHelper;
+import com.example.util.Pair;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
-public class GuiAnvil extends BapsGui
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class GuiAnvil extends GuiContainer
 {
 	public final ContainerAnvil theContainer;
 	public GuiAnvil(Container container)
 	{
 		super(container);
 		theContainer = (ContainerAnvil) container;
-	}
-
-	@Override
-	public Class<? extends IInventory> getInventoryClass()
-	{
-		return InventoryAnvil.class;
-	}
-
-	@Override
-	public Class<? extends Container> getContainerClass()
-	{
-		return ContainerAnvil.class;
-	}
-
-	@Override
-	public int getGuiID()
-	{
-		return 100;
 	}
 
 	@Override
@@ -44,27 +30,88 @@ public class GuiAnvil extends BapsGui
 		this.fontRenderer.drawString("Anvil", 8, 6, GuiHelper.Colour.FONT.hex);
 		this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, GuiHelper.Colour.FONT.hex);
 
-		if(isValidCombo(theContainer))
+		State guiState = getState();
+		if(guiState != State.IDLE)
 		{
-			this.fontRenderer.drawString("Faggot Detected!", 37, 59, 0x0000000);
-			this.fontRenderer.drawString("Faggot Detected!", 35, 59, 0x0000000);
-			this.fontRenderer.drawString("Faggot Detected!", 36, 58, 0x0000000);
-			this.fontRenderer.drawString("Faggot Detected!", 36, 60, 0x0000000);
-			this.fontRenderer.drawString("Faggot Detected!", 36, 59, GuiHelper.Colour.XPGREEN.hex);
+			int colour = guiState == State.INVALID ? 0x00EE0000 : GuiHelper.Colour.XPGREEN.hex;
+			drawInfoText(getText(guiState), colour);
 		}
-
+	}
+	public void drawInfoText(String str, int colour)
+	{
+		this.fontRenderer.drawString(str, 37, 59, 0x0000000);
+		this.fontRenderer.drawString(str, 35, 59, 0x0000000);
+		this.fontRenderer.drawString(str, 36, 58, 0x0000000);
+		this.fontRenderer.drawString(str, 36, 60, 0x0000000);
+		this.fontRenderer.drawString(str, 36, 59, colour);
 	}
 
 	@Override
 	public void updateScreen()
 	{
+		current = getState();
+		if(prev!=current)
+		{
+			drawGuiContainerForegroundLayer();
+		}
+		prev = current;
+	}
+	private State prev = State.IDLE;
+	private State current = State.IDLE;
 
-		drawGuiContainerForegroundLayer();
+
+	public enum State{
+		IDLE,
+		INVALID,
+		COMBINE,
+		REPAIR;
 	}
 
-	private boolean isValidCombo(ContainerAnvil theContainer)
+	public String getText(State state)
 	{
-		return theContainer.input1.getHasStack();
+		switch (state)
+		{
+			case IDLE: return "";
+			case INVALID: return "Invalid Combination!";
+			case REPAIR: return "Repair cost: "+getCost()+" levels";
+			case COMBINE: return "Combine cost: "+getCost()+" levels";
+
+		}
+		return "null";
+	}
+
+
+
+	private State getState()
+	{
+		if(!(theContainer.input1.getHasStack()&&theContainer.input2.getHasStack())) return State.IDLE;
+		ItemStack i1 = theContainer.input1.getStack();
+		ItemStack i2 = theContainer.input2.getStack();
+		if(isToolOrWeapon(i1)&&(i1.getItem() == i2.getItem())) return State.COMBINE;
+		if(isToolOrWeapon(i1)&&isMaterial(i2)) return State.REPAIR;
+		return State.INVALID;
+	}
+	private boolean isToolOrWeapon(ItemStack s)
+	{
+		//TODO: needs robuster
+		return s.getMaxDamage()>2;
+	}
+	public static Set<Integer> materialItemIDs = new HashSet<>(Arrays.asList(
+		Item.leather.shiftedIndex+256,
+		Item.ingotIron.shiftedIndex+256,
+		Block.cobblestone.blockID,
+		Item.ingotGold.shiftedIndex+256,
+		Item.diamond.shiftedIndex+256
+		//autogen materials automatically get added here
+	));
+	private boolean isMaterial(ItemStack s)
+	{
+		if(s.getItem() instanceof ItemBlock) return materialItemIDs.contains(((ItemBlock) s.getItem()).getBlockID());
+		return materialItemIDs.contains(s.getItem().shiftedIndex+256);
+	}
+	private String getCost()
+	{
+		return "999";
 	}
 
 	@Override

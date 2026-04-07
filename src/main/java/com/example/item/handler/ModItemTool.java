@@ -15,10 +15,10 @@ public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 	public final ModItemBuilder props;
 	public ModItemTool(ModItemBuilder struct)
 	{
-		super(ModItemDefaults.id, 2, EnumToolMaterial.EMERALD, struct.autogenItemType.getEffectiveBlocks());
+		super(ModItemDefaults.id, 2, EnumToolMaterial.EMERALD, new Block[1]);
 		ModItemDefaults.init(this, struct);
 		props = struct;
-
+		this.efficiencyOnProperMaterial = props.mineSpeed;
 		setMaxDamage(47 * struct.autogenMaterial.durabilityFactor);
 
 		ModItem.getItemByID.put(256+ModItemDefaults.id, this);
@@ -51,28 +51,11 @@ public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 		return false;
 	}
 	@Override
-	public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block) {
-		return par2Block == null
-			|| par2Block.blockMaterial != Material.iron && par2Block.blockMaterial != Material.rock
-			?
-			getStrVsBlockSuper(par1ItemStack, par2Block)
-			:
-			this.efficiencyOnProperMaterial;
-	}
-
-	public float getStrVsBlockSuper(ItemStack par1ItemStack, Block par2Block) {
-		Block[] var3 = this.props.autogenItemType.getEffectiveBlocks();
-		int var4 = var3.length;
-
-		for(int var5 = 0; var5 < var4; ++var5) {
-			Block var6 = var3[var5];
-			if (var6 == par2Block) {
-				return this.efficiencyOnProperMaterial;
-			}
-		}
-
+	public float getStrVsBlock(ItemStack itemStack, Block block) {
+		if(canHarvestBlock(block)) return this.efficiencyOnProperMaterial;
 		return 1.0F;
 	}
+
 
 	public EnumAction getItemUseAction(ItemStack itemStack) {
 		if(props.autogenItemType == ItemTypeAG.SWORD)

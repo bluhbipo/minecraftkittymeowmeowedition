@@ -2,7 +2,6 @@ package com.example.block;
 
 import com.example.ItemOrBlock;
 import com.example.mod_ExampleMod;
-import com.example.gui.BapsGui;
 import com.example.gui.anvil.ContainerAnvil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.common.Side;
@@ -36,6 +35,16 @@ public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
 	{
 		if(props.renderer == null) return 0;
 		return props.renderer.getRenderId();
+	}
+
+	@Override
+	public int idDropped(int idk, Random random, int idk2) {
+		if(props.overriddenDrop!=null)
+		{
+			if(props.overriddenDrop instanceof Item) return ((Item)props.overriddenDrop).shiftedIndex;
+			return ((Block)props.overriddenDrop).blockID;
+		}
+		return super.idDropped(idk, random, idk2);
 	}
 
 	@Override
@@ -76,57 +85,8 @@ public class ModBlock extends Block implements ModifiedBlock, ItemOrBlock
 
 		if(props.gui==null) return false;
 		if (world.isRemote) return true;
-
-		try
-		{
-			player.openGui(
-				mod_ExampleMod.instance,
-				props.gui.getConstructor(Container.class).newInstance(new Object[1]).getGuiID(),
-				world,
-				x,
-				y,
-				z
-
-			);
-		} catch (Exception e)
-		{
-			return false;
-		}
+		player.openGui(mod_ExampleMod.instance, props.gui.guiID, world, x, y, z);
 		return true;
-		/*
-		try
-		{
-			Constructor<? extends BapsGui> guiConstructor = props.gui.getConstructor(Container.class);
-			BapsGui unused = guiConstructor.newInstance(new Object[1]);
-
-			Constructor<? extends Container> containerConstructor = unused
-				.getContainerClass()
-				.getConstructor(
-					InventoryPlayer.class,
-					IInventory.class
-				);
-
-			Class<? extends IInventory> inventoryClass = unused.getInventoryClass();
-
-			Minecraft
-				.getMinecraft()
-				.displayGuiScreen(
-					guiConstructor.newInstance(
-						containerConstructor.newInstance(
-							player.inventory,
-							inventoryClass.newInstance()
-
-						)
-					)
-				);
-			return true;
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-
-		 */
 	}
 
 	private void tryToFall(World world, int x, int y, int z) {

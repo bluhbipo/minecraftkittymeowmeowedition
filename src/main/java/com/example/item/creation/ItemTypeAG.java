@@ -78,14 +78,4 @@ public enum ItemTypeAG
 	public static final String[] bootsPattern     = new String[]{"m m", "m m"};
 	public static final String[] blockPattern     = new String[]{"mmm","mmm","mmm"};
 
-	public Block[] getEffectiveBlocks()
-	{
-		switch (this)
-		{
-			case AXE: return ItemAxe.blocksEffectiveAgainst;
-			case PICKAXE: return ItemPickaxe.blocksEffectiveAgainst;
-			case SHOVEL: return ItemSpade.blocksEffectiveAgainst;
-			default: return null;
-		}
-	}
 }

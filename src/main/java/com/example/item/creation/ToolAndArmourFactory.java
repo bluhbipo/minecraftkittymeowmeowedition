@@ -25,6 +25,10 @@ public class ToolAndArmourFactory
 			{
 				res[index].cookedFrom(m.getOre());
 			}
+			if(t.getSuperType() == ItemTypeAG.SuperTypes.TOOL)
+			{
+				res[index].mineSpeed = m.efficiencyOnCorrectBlock;
+			}
 			index++;
 		}
 		return res;
