@@ -15,13 +15,13 @@ public class ModItemFood extends ItemFood implements ModifiedItem, ItemOrBlock
 	String name = "";
 	public ModItemFood(ModItemBuilder struct)
 	{
-		super(ModItemDefaults.id, struct.hungerPoints, struct.saturationModifier, struct.meatness);
+		super(ModItemDefaults.id-256, struct.hungerPoints, struct.saturationModifier, struct.meatness);
 
 		ModItemDefaults.init(this, struct);
 
 		name=struct.name;
 
-		ModItem.getItemByID.put(256+ModItemDefaults.id, this);
+		ModItem.getItemByID.put(ModItemDefaults.id, this);
 		ModItemDefaults.id++;
 	}
 	@Override

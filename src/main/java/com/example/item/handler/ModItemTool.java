@@ -6,22 +6,26 @@ import com.example.item.ModifiedItem;
 import com.example.item.creation.ItemTypeAG;
 import com.example.item.creation.MaterialAG;
 import com.example.item.creation.ModItemBuilder;
+import com.example.override.itemoverrides.ToolTipRules;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.src.*;
+
+import java.util.List;
 
 public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 {
 	public final ModItemBuilder props;
 	public ModItemTool(ModItemBuilder struct)
 	{
-		super(ModItemDefaults.id, 2, EnumToolMaterial.EMERALD, new Block[1]);
+		super(ModItemDefaults.id-256, 2, EnumToolMaterial.EMERALD, new Block[1]);
 		ModItemDefaults.init(this, struct);
 		props = struct;
 		this.efficiencyOnProperMaterial = props.mineSpeed;
+		System.out.println("setting max damage of item id: "+ModItemDefaults.id+", "+47 * struct.autogenMaterial.durabilityFactor);
 		setMaxDamage(47 * struct.autogenMaterial.durabilityFactor);
 
-		ModItem.getItemByID.put(256+ModItemDefaults.id, this);
+		ModItem.getItemByID.put(ModItemDefaults.id, this);
 		ModItemDefaults.id++;
 
 
@@ -56,6 +60,11 @@ public class ModItemTool extends ItemTool implements ModifiedItem, ItemOrBlock
 		return 1.0F;
 	}
 
+	@Override
+	public void addInformation(ItemStack itemStack, List list)
+	{
+		ToolTipRules.getTooltip(this, itemStack, list);
+	}
 
 	public EnumAction getItemUseAction(ItemStack itemStack) {
 		if(props.autogenItemType == ItemTypeAG.SWORD)

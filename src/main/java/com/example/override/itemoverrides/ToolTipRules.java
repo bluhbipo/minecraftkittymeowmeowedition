@@ -11,7 +11,6 @@ public class ToolTipRules
 {
 	public static void getTooltip(Item item, ItemStack itemStack, List entries)
 	{
-
 		if(itemStack.getMaxDamage()>0)
 		{
 			entries.add(ChatColour.WHITE+"Durability: "+(itemStack.getMaxDamage()-itemStack.getItemDamage())+" / "+itemStack.getMaxDamage());

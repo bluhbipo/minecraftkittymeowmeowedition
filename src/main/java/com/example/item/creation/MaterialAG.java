@@ -12,9 +12,9 @@ import net.minecraft.src.ItemArmor;
 
 public enum MaterialAG
 {
-	NETHERITE(0, 25, 45, 10f, Item.blazeRod),
-	ENDERITE(1, 30, 60, 12f, Item.blazeRod),
-	EMERALD(2, 15, 12, 6f, Item.stick)
+	NETHERITE(0, 25, 45, 10f, Item.blazeRod, new int[]{5, 9, 7, 5}),
+	ENDERITE(1, 30, 60, 12f, Item.blazeRod, new int[]{6, 12, 9, 6}),
+	EMERALD(2, 15, 12, 6f, Item.stick, new int[]{2, 5, 4, 1})
 	;
 	public final int textureIndex;
 	public final int enchantability;
@@ -22,8 +22,9 @@ public enum MaterialAG
 	public final int armourRenderIndex;
 	public final float efficiencyOnCorrectBlock;
 	public final Item toolStick;
+	public final int[] armourValues;
 	ItemArmor e;
-	MaterialAG(int t, int e, int d, float b, Item s)
+	MaterialAG(int t, int e, int d, float b, Item s, int[] av)
 	{
 		textureIndex = t;
 		enchantability = e;
@@ -31,6 +32,7 @@ public enum MaterialAG
 		efficiencyOnCorrectBlock = b;
 		toolStick = s;
 		armourRenderIndex = RenderingRegistry.addNewArmourRendererPrefix(this.toString().toLowerCase());
+		armourValues = av;
 	}
 	public ItemOrBlock getOre()
 	{

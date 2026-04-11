@@ -9,7 +9,7 @@ public class ContainerAnvil extends Container
 	public final Slot input2;
 	public final Slot output;
 
-	ContainerBrewingStand b;
+	ContainerFurnace b;
 
 	public ContainerAnvil(InventoryPlayer inventoryPlayer, IInventory inventoryRules) {
 
@@ -34,39 +34,41 @@ public class ContainerAnvil extends Container
 
 	}
 
-	public ItemStack transferStackInSlot(int par1) {
-		Slot slot = (Slot)this.inventorySlots.get(par1);
-		if (slot == null || !slot.getHasStack()) return null;
-
-		ItemStack stack = slot.getStack();
-		ItemStack result = stack.copy();
-
-		if (par1 == 0 || par1 == 1 || par1 == 2) {
-			if (!mergeItemStack(stack, 3, 39, false)) return null;
-		} else {
-			boolean moved = false;
-			for (int i = 0; i <= 1; i++) {
-				Slot target = (Slot)this.inventorySlots.get(i);
-				if (target.getHasStack() || !target.isItemValid(stack)) continue;
-				if (mergeItemStack(stack, i, i + 1, false)) {
-					moved = true;
-					break;
+	public ItemStack transferStackInSlot(int slot) {
+		ItemStack var2 = null;
+		Slot var3 = (Slot)this.inventorySlots.get(slot);
+		if (var3 != null && var3.getHasStack()) {
+			ItemStack var4 = var3.getStack();
+			var2 = var4.copy();
+			if (slot == 2) {
+				if (!this.mergeItemStack(var4, 3, 39, true)) {
+					return null;
 				}
 
+				var3.onSlotChange(var4, var2);
+			} else if (slot != 1 && slot != 0) {
+				if (!this.mergeItemStack(var4, 1, 2, false))
+				{
+					return null;
+				}
+			} else if (!this.mergeItemStack(var4, 3, 39, false)) {
+				return null;
 			}
-			if (!moved && !mergeItemStack(stack, 3, 39, false)) return null;
+
+			if (var4.stackSize == 0) {
+				var3.putStack(null);
+			} else {
+				var3.onSlotChanged();
+			}
+
+			if (var4.stackSize == var2.stackSize) {
+				return null;
+			}
+
+			var3.onPickupFromSlot(var4);
 		}
 
-		if (stack.stackSize == 0) {
-			slot.putStack(null);
-		} else {
-			slot.onSlotChanged();
-		}
-
-		if (stack.stackSize == result.stackSize) return null;
-
-		slot.onPickupFromSlot(stack);
-		return result;
+		return var2;
 	}
 
 	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {

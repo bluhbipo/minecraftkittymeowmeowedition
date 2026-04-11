@@ -10,19 +10,37 @@ import net.minecraft.src.ItemArmor;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.EnumHelper;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class ModItemArmour extends ItemArmor implements ModifiedItem, ItemOrBlock
 {
 	public final ModItemBuilder props;
+
 	private static final int[] maxDamageArray = new int[]{11, 16, 15, 13};
 	public ModItemArmour(ModItemBuilder struct)
 	{
-		super(ModItemDefaults.id, EnumArmorMaterial.DIAMOND, struct.autogenMaterial.armourRenderIndex, struct.armourType);
+		super(ModItemDefaults.id-256, EnumArmorMaterial.DIAMOND, struct.autogenMaterial.armourRenderIndex, struct.armourType);
 		props = struct;
 		this.setMaxDamage(maxDamageArray[struct.armourType]*struct.autogenMaterial.durabilityFactor);
+
+		try
+		{
+			Field damageReduceAmount = this.getClass().getSuperclass().getDeclaredField("b");
+			damageReduceAmount.setAccessible(true);
+			damageReduceAmount.set(this, struct.autogenMaterial.armourValues[struct.armourType]);
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
+
+
+
+
 		ModItemDefaults.init(this, struct);
-		ModItem.getItemByID.put(256+ModItemDefaults.id, this);
+		ModItem.getItemByID.put(ModItemDefaults.id, this);
 		ModItemDefaults.id++;
 
 	}

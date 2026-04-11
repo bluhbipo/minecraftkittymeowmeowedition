@@ -11,7 +11,7 @@ public class ModItemDefaults
 	public static int id = 10000;
 	public static void init(ModifiedItem i, ModItemBuilder ii)
 	{
-		System.out.println("registered item with id: "+(256+id));
+		System.out.println("registered item with id: "+id);
 
 
 		Item item = (Item)i;

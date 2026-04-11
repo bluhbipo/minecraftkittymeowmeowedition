@@ -33,17 +33,20 @@ public class GuiAnvil extends GuiContainer
 		State guiState = getState();
 		if(guiState != State.IDLE)
 		{
-			int colour = guiState == State.INVALID ? 0x00EE0000 : GuiHelper.Colour.XPGREEN.hex;
-			drawInfoText(getText(guiState), colour);
+			int cost = getCost();
+			int colour = GuiHelper.Colour.XPGREEN.hex;
+			if(guiState == State.INVALID || cost > this.mc.thePlayer.experienceLevel) colour = GuiHelper.Colour.INVALID.hex;
+			drawInfoText(getText(guiState, cost), colour);
 		}
 	}
 	public void drawInfoText(String str, int colour)
 	{
-		this.fontRenderer.drawString(str, 37, 59, 0x0000000);
-		this.fontRenderer.drawString(str, 35, 59, 0x0000000);
-		this.fontRenderer.drawString(str, 36, 58, 0x0000000);
-		this.fontRenderer.drawString(str, 36, 60, 0x0000000);
-		this.fontRenderer.drawString(str, 36, 59, colour);
+		int xcoord = 27;
+		this.fontRenderer.drawString(str, xcoord+1, 59, 0x0000000);
+		this.fontRenderer.drawString(str, xcoord-1, 59, 0x0000000);
+		this.fontRenderer.drawString(str, xcoord, 58, 0x0000000);
+		this.fontRenderer.drawString(str, xcoord, 60, 0x0000000);
+		this.fontRenderer.drawString(str, xcoord, 59, colour);
 	}
 
 	@Override
@@ -67,14 +70,14 @@ public class GuiAnvil extends GuiContainer
 		REPAIR;
 	}
 
-	public String getText(State state)
+	public String getText(State state, int cost)
 	{
 		switch (state)
 		{
 			case IDLE: return "";
 			case INVALID: return "Invalid Combination!";
-			case REPAIR: return "Repair cost: "+getCost()+" levels";
-			case COMBINE: return "Combine cost: "+getCost()+" levels";
+			case REPAIR: return "Repair cost: "+cost+" levels";
+			case COMBINE: return "Combine cost: "+cost+" levels";
 
 		}
 		return "null";
@@ -109,9 +112,9 @@ public class GuiAnvil extends GuiContainer
 		if(s.getItem() instanceof ItemBlock) return materialItemIDs.contains(((ItemBlock) s.getItem()).getBlockID());
 		return materialItemIDs.contains(s.getItem().shiftedIndex+256);
 	}
-	private String getCost()
+	private int getCost()
 	{
-		return "999";
+		return 999;
 	}
 
 	@Override
